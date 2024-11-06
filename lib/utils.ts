@@ -67,6 +67,10 @@ export module Utils {
     }
 
     static testIpAddress() {
+      if (this.config.IpAddress) {
+        utils.log.info("Using IP address from config: %s", this.config.IpAddress);
+        return;
+      }
       var ip, interfaces = networkInterfaces();
       for (var inf of this.config.NetworkAdapters) {
         ip = this.getAddress(interfaces[inf], "IPv4");
@@ -90,6 +94,9 @@ export module Utils {
     }
 
     static getIpAddress(type?: string) {
+      if (this.config.IpAddress) {
+        return this.config.IpAddress;
+      }
       type = type || "IPv4";
       var interfaces = networkInterfaces();
       for (var inf of this.config.NetworkAdapters) {
