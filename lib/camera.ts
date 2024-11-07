@@ -97,7 +97,9 @@ class Camera {
     this.setupWebserver();
     this.setupCamera();
 
-    v4l2ctl.ReadControls();
+    if (this.config.RTSPServer != 0) {
+      v4l2ctl.ReadControls();
+    }
 
     utils.cleanup(() => {
       this.stopRtsp();
@@ -203,6 +205,7 @@ class Camera {
   }
 
   setupCamera() {
+    if (this.config.RTSPServer == 0) return;
     v4l2ctl.SetPixelFormat(v4l2ctl.Pixelformat.H264)
     v4l2ctl.SetResolution(this.settings.resolution);
     v4l2ctl.SetFrameRate(this.settings.framerate);
