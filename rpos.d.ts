@@ -24,6 +24,8 @@ interface rposConfig {
   DeviceInformation: DeviceInformation;
   logLevel: number;
   logSoapCalls: Boolean;
+  GetSnapshotUri: boolean;
+  EventsService: boolean;
 }
 
 interface PTZSerialPortSettings {

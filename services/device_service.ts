@@ -201,11 +201,14 @@ class DeviceService extends SoapService {
         };
       }
       if (category == undefined || category == "All" || category == "Events") {
-        GetCapabilitiesResponse.Capabilities["Events"] = {
-          XAddr: `http://${utils.getIpAddress() }:${this.config.ServicePort}/onvif/events_service`,
-          WSSubscriptionPolicySupport: false,
-          WSPullPointSupport: false,
-          WSPausableSubscriptionManagerInterfaceSupport: false
+        // Skip setting Events to indicate it is not supported
+        if (this.config.EventsService !== false) {
+          GetCapabilitiesResponse.Capabilities["Events"] = {
+            XAddr: `http://${utils.getIpAddress() }:${this.config.ServicePort}/onvif/events_service`,
+            WSSubscriptionPolicySupport: false,
+            WSPullPointSupport: false,
+            WSPausableSubscriptionManagerInterfaceSupport: false
+          }
         }
       }
       if (category === undefined || category == "All" || category == "Imaging") {

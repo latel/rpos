@@ -353,6 +353,16 @@ class MediaService extends SoapService {
     };
 
     port.GetSnapshotUri = (args) => {
+      if (this.config.GetSnapshotUri === false) {
+        utils.log.debug("Snapshot URI not supported by config");
+        const GetSnapshotUriResponse = {
+          Fault: {
+            Code: { Value: "soap:Client" },
+            Reason: { Text: "Snapshot URI not supported" }
+          }
+        };
+        return GetSnapshotUriResponse;
+      }
       var GetSnapshotUriResponse = {
         MediaUri : {
           Uri : "http://" + utils.getIpAddress() + ":" + this.config.ServicePort + "/web/snapshot.jpg",
